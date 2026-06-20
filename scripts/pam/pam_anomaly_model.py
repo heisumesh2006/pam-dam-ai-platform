@@ -13,7 +13,7 @@ from sklearn.metrics import (
     classification_report
 )
 
-df = pd.read_csv("pam_login_dataset_v2.csv")
+df = pd.read_csv("../../data/pam/pam_login_dataset_v2_final.csv")
 
 categorical_cols = [
     "role",
@@ -139,7 +139,7 @@ print(
 
 joblib.dump(
     model,
-    "pam_isolation_forest.pkl"
+    "../../models/pam/pam_isolation_forest.pkl"
 )
 
 print("\nModel Saved:")
