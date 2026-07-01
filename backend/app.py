@@ -35,7 +35,7 @@ def health():
 @app.post("/predict/pam-risk")
 def predict_pam_risk(data: PAMRequest):
 
-    sample = pd.DataFrame([data.dict()])
+    sample = pd.DataFrame([data.model_dump()])
 
     score = float(
         models.pam_risk_model.predict(sample)[0]
@@ -59,7 +59,7 @@ def predict_pam_risk(data: PAMRequest):
 @app.post("/predict/pam-anomaly")
 def predict_pam_anomaly(data: PAMRequest):
 
-    sample = pd.DataFrame([data.dict()])
+    sample = pd.DataFrame([data.model_dump()])
 
     prediction = int(
         models.pam_anomaly_model.predict(sample)[0]
