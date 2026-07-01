@@ -1,47 +1,28 @@
-def calculate_risk(
-    pam_score: float,
-    pam_anomaly: bool,
-    dam_anomaly: bool
-):
+def calculate_risk(pam_anomaly: bool, dam_anomaly: bool):
 
-    final_score = pam_score
+    if not pam_anomaly and not dam_anomaly:
+        return {
+            "threat_level": "LOW",
+            "risk_score": 20,
+            "recommended_action": "Continue Monitoring"
+        }
 
-    if pam_anomaly:
-        final_score += 10
+    if pam_anomaly and not dam_anomaly:
+        return {
+            "threat_level": "MEDIUM",
+            "risk_score": 60,
+            "recommended_action": "Review Privileged Session"
+        }
 
-    if dam_anomaly:
-        final_score += 20
-
-    final_score = min(final_score, 100)
-
-    if final_score < 40:
-        level = "LOW"
-        action = "Continue Monitoring"
-
-    elif final_score < 75:
-        level = "MEDIUM"
-        action = "Review User Activity"
-
-    else:
-        level = "HIGH"
-        action = "Terminate Session Immediately"
+    if not pam_anomaly and dam_anomaly:
+        return {
+            "threat_level": "HIGH",
+            "risk_score": 85,
+            "recommended_action": "Investigate Database Activity"
+        }
 
     return {
-        "pam_score": round(pam_score, 2),
-        "pam_anomaly": pam_anomaly,
-        "dam_anomaly": dam_anomaly,
-        "final_score": round(final_score, 2),
-        "threat_level": level,
-        "recommended_action": action
+        "threat_level": "CRITICAL",
+        "risk_score": 100,
+        "recommended_action": "Terminate Session Immediately"
     }
-
-
-if __name__ == "__main__":
-
-    result = calculate_risk(
-        pam_score=82,
-        pam_anomaly=True,
-        dam_anomaly=True
-    )
-
-    print(result)
