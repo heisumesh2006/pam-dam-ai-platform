@@ -1,45 +1,76 @@
 import Navbar from "../components/Navbar";
 import StatsCard from "../components/StatsCard";
 import IncidentTable from "../components/IncidentTable";
+import { Link } from "react-router-dom";
 
-export default function Dashboard(){
+export default function Dashboard() {
 
-return(
+    return (
 
-<div className="bg-slate-950 min-h-screen">
+        <div className="bg-slate-950 min-h-screen">
 
-<Navbar/>
+            <Navbar />
 
-<div className="max-w-7xl mx-auto p-8">
+            <div className="max-w-7xl mx-auto p-8">
 
-<div className="grid md:grid-cols-3 gap-6">
+                <h1 className="text-4xl font-bold text-white mb-8">
 
-<StatsCard
-title="PAM Alerts"
-value="LIVE"
-color="#f59e0b"
-/>
+                    Security Operations Dashboard
 
-<StatsCard
-title="DAM Alerts"
-value="LIVE"
-color="#ef4444"
-/>
+                </h1>
 
-<StatsCard
-title="System"
-value="ONLINE"
-color="#22c55e"
-/>
+                <div className="grid md:grid-cols-3 gap-6">
 
-</div>
+                    <StatsCard
+                        title="PAM Monitoring"
+                        value="ACTIVE"
+                        color="#f59e0b"
+                    />
 
-<IncidentTable/>
+                    <StatsCard
+                        title="DAM Monitoring"
+                        value="ACTIVE"
+                        color="#ef4444"
+                    />
 
-</div>
+                    <StatsCard
+                        title="System Status"
+                        value="ONLINE"
+                        color="#22c55e"
+                    />
 
-</div>
+                </div>
 
-)
+                <div className="flex gap-5 mt-10 mb-10">
+
+                    <Link to="/pam">
+
+                        <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-bold">
+
+                            🔐 PAM Login Analyzer
+
+                        </button>
+
+                    </Link>
+
+                    <Link to="/dam">
+
+                        <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-bold">
+
+                            🗄️ DAM Query Analyzer
+
+                        </button>
+
+                    </Link>
+
+                </div>
+
+                <IncidentTable />
+
+            </div>
+
+        </div>
+
+    );
 
 }
