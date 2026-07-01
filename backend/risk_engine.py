@@ -1,52 +1,47 @@
 def calculate_risk(
-    pam_score,
-    dam_score
+    pam_score: float,
+    pam_anomaly: bool,
+    dam_anomaly: bool
 ):
 
-    final_score = (
-        pam_score * 0.4 +
-        dam_score * 0.6
-    )
+    final_score = pam_score
+
+    if pam_anomaly:
+        final_score += 10
+
+    if dam_anomaly:
+        final_score += 20
+
+    final_score = min(final_score, 100)
 
     if final_score < 40:
-
         level = "LOW"
+        action = "Continue Monitoring"
 
     elif final_score < 75:
-
         level = "MEDIUM"
+        action = "Review User Activity"
 
     else:
-
         level = "HIGH"
+        action = "Terminate Session Immediately"
 
     return {
-        "pam_score": round(
-            pam_score,
-            2
-        ),
-        "dam_score": round(
-            dam_score,
-            2
-        ),
-        "final_score": round(
-            final_score,
-            2
-        ),
-        "threat_level": level
+        "pam_score": round(pam_score, 2),
+        "pam_anomaly": pam_anomaly,
+        "dam_anomaly": dam_anomaly,
+        "final_score": round(final_score, 2),
+        "threat_level": level,
+        "recommended_action": action
     }
 
 
 if __name__ == "__main__":
 
     result = calculate_risk(
-        pam_score=65,
-        dam_score=88
+        pam_score=82,
+        pam_anomaly=True,
+        dam_anomaly=True
     )
 
-    print("\n===== UNIFIED RISK =====\n")
-
-    for k,v in result.items():
-        print(
-            f"{k}: {v}"
-        )
+    print(result)
